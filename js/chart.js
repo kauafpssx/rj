@@ -32,8 +32,8 @@ export function renderChart(estacao, historico, chartRange, chartInstance) {
   const grad = ctx.createLinearGradient(0, 0, 0, 400);
   const c = pct >= 100 ? 'red' : pct >= 80 ? 'orange' : pct >= 50 ? 'yellow' : 'green';
   const colorHex = CONFIG.COLORS[c];
-  grad.addColorStop(0, colorHex + '80');
-  grad.addColorStop(1, colorHex + '10');
+  grad.addColorStop(0, colorHex + '60');
+  grad.addColorStop(1, colorHex + '05');
 
   const newChart = new Chart(ctx, {
     type: 'line',
@@ -45,10 +45,12 @@ export function renderChart(estacao, historico, chartRange, chartInstance) {
         borderColor: colorHex,
         backgroundColor: grad,
         fill: true,
-        tension: 0.2,
-        pointRadius: 2,
-        pointHoverRadius: 5,
-        pointBackgroundColor: colorHex,
+        tension: 0.3,
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        pointHoverBackgroundColor: colorHex,
+        pointHoverBorderColor: '#080f1a',
+        pointHoverBorderWidth: 2,
         borderWidth: 2,
       }],
     },
@@ -64,41 +66,48 @@ export function renderChart(estacao, historico, chartRange, chartInstance) {
               type: 'line',
               yMin: estacao.cota_inundacao,
               yMax: estacao.cota_inundacao,
-              borderColor: CONFIG.COLORS.red + '80',
-              borderWidth: 2,
+              borderColor: '#f8717180',
+              borderWidth: 1.5,
               borderDash: [6, 4],
               label: {
                 display: true,
                 content: `Inundação ${estacao.cota_inundacao.toFixed(2)}m`,
                 position: 'end',
-                backgroundColor: CONFIG.COLORS.red + '30',
-                color: CONFIG.COLORS.red,
-                font: { size: 11 },
+                backgroundColor: 'rgba(248,113,113,0.15)',
+                color: '#f87171',
+                font: { size: 10, family: 'JetBrains Mono' },
               },
             },
           },
         },
         tooltip: {
-          backgroundColor: 'rgba(20,25,35,0.95)',
-          titleColor: '#f5f6fa',
-          bodyColor: '#a0a4b0',
-          borderColor: 'rgba(255,255,255,0.12)',
+          backgroundColor: 'rgba(11,22,38,0.95)',
+          titleColor: '#eaf0f6',
+          titleFont: { size: 11, family: 'Sora', weight: '600' },
+          bodyColor: '#7f95b0',
+          bodyFont: { size: 11, family: 'JetBrains Mono' },
+          borderColor: 'rgba(240,180,41,0.12)',
           borderWidth: 1,
           padding: 10,
-          cornerRadius: 8,
+          cornerRadius: 6,
+          displayColors: false,
           callbacks: {
+            title: (items) => {
+              if (dias <= 1) return items[0].label;
+              return items[0].label;
+            },
             label: (ctx) => `${ctx.parsed.y.toFixed(2)}m`,
           },
         },
       },
       scales: {
         x: {
-          ticks: { color: '#a0a4b0', maxTicksLimit: dias <= 1 ? 12 : 10, font: { size: 10 } },
-          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: '#4a5f78', maxTicksLimit: dias <= 1 ? 10 : 8, font: { size: 9, family: 'JetBrains Mono' } },
+          grid: { color: 'rgba(240,180,41,0.04)' },
         },
         y: {
-          ticks: { color: '#a0a4b0', font: { size: 10 }, callback: (v) => `${v.toFixed(1)}m` },
-          grid: { color: 'rgba(255,255,255,0.08)' },
+          ticks: { color: '#4a5f78', font: { size: 9, family: 'JetBrains Mono' }, callback: (v) => `${v.toFixed(1)}` },
+          grid: { color: 'rgba(240,180,41,0.06)' },
         },
       },
     },
@@ -120,6 +129,6 @@ function renderStats(vals, count) {
     <span>Mín: <span class="stat-val">${min.toFixed(2)}m</span></span>
     <span>Méd: <span class="stat-val">${avg.toFixed(2)}m</span></span>
     <span>Máx: <span class="stat-val">${max.toFixed(2)}m</span></span>
-    <span>Leituras: <span class="stat-val">${count}</span></span>
+    <span>Reg: <span class="stat-val">${count}</span></span>
   `;
 }

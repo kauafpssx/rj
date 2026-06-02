@@ -87,12 +87,11 @@ async function init() {
     setupTouchSwipe();
     setupChartFilters();
   } catch (err) {
-    document.body.innerHTML = `
-      <div class="app">
-        <div class="detail-card" style="text-align:center;padding:40px;margin-top:40px;">
-          <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:var(--red);margin-bottom:12px;"></i>
-          <p style="color:var(--text-dim);font-size:1rem;">${err.message}</p>
-        </div>
+    document.querySelector('.app').innerHTML = `
+      <div class="detail-card" style="text-align:center;padding:48px 24px;margin-top:40px;">
+        <i class="fas fa-exclamation-triangle" style="font-size:2.5rem;color:var(--red);margin-bottom:12px;"></i>
+        <p style="color:var(--text-dim);font-size:0.85rem;font-family:'JetBrains Mono',monospace;">${err.message}</p>
+        <p style="color:var(--text-muted);font-size:0.7rem;margin-top:12px;">Tente novamente mais tarde</p>
       </div>`;
   }
 }

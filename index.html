@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monitoramento de Rios - RS</title>
+  <title>HydroMonitor — Bacia do Guaíba</title>
+  <meta name="description" content="Monitoramento em tempo real do nível dos rios da Bacia do Guaíba — 12 estações, dados oficiais ANA/SGB">
+  <meta name="theme-color" content="#080f1a">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -14,9 +16,16 @@
   <div class="app">
     <header class="header">
       <div class="header-content">
-        <i class="fas fa-water header-icon"></i>
-        <h1>Monitoramento de Rios</h1>
-        <span class="header-sub">Rio Grande do Sul</span>
+        <div class="header-brand">
+          <div class="header-icon-wrap">
+            <i class="fas fa-water header-icon"></i>
+          </div>
+          <div class="header-text">
+            <div class="header-title">Hydro<span>Monitor</span></div>
+            <div class="header-sub">Bacia do Jacuí · RS</div>
+          </div>
+        </div>
+        <span class="header-badge"><i class="fas fa-database"></i> 12 estações</span>
       </div>
     </header>
 
@@ -47,7 +56,9 @@
             <span class="detail-level-unit">m</span>
           </div>
 
-          <div class="detail-tendencia" id="detailTendencia"></div>
+          <div class="detail-tendencia" id="detailTendencia">
+            <span class="trend-stable"><i class="fas fa-minus"></i> Aguardando dados</span>
+          </div>
 
           <div class="detail-status" id="detailStatus">
             <span class="status-badge" id="statusBadge">--</span>
@@ -61,7 +72,7 @@
             </div>
             <div class="meta-item">
               <i class="fas fa-sync-alt"></i>
-              <span>Sincronizado: <strong id="detailSync">--</strong></span>
+              <span>Sinc: <strong id="detailSync">--</strong></span>
             </div>
           </div>
 
@@ -92,12 +103,11 @@
         </div>
       </section>
 
-      <section class="toast-container" id="toastContainer"></section>
+      <div class="toast-container" id="toastContainer"></div>
     </main>
 
     <footer class="footer">
-      <p>Dados: <a href="https://www.gov.br/ana" target="_blank" rel="noopener">ANA</a> / <a href="https://www.sgb.gov.br" target="_blank" rel="noopener">SGB/CPRM</a></p>
-      <p>Desenvolvido com 💙</p>
+      <p>HydroMonitor v3.0</p>
     </footer>
   </div>
 

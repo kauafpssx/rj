@@ -17,11 +17,12 @@ export const CONFIG = {
   HISTORICO_PATH: './historico.json',
   DADOS_PATH: './dados.json',
   COLORS: {
-    green: '#2ecc71',
-    yellow: '#f1c40f',
-    orange: '#e67e22',
-    red: '#e74c3c',
-    primary: '#4bcffa',
+    green: '#34d399',
+    yellow: '#facc15',
+    orange: '#f97316',
+    red: '#f87171',
+    amber: '#f0b429',
+    cyan: '#22d3ee',
   },
   NOTIFICATION_KEY: 'rj_last_notified',
 };
