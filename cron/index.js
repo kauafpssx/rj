@@ -115,10 +115,22 @@ async function appendHistorico(medicoes) {
   const sha = await getSha('main', 'historico.json');
   if (sha) {
     const { data } = await axios.get(`${GITHUB_API}/historico.json?ref=main`, { headers: authHeader() });
-    historico = JSON.parse(Buffer.from(data.content, 'base64').toString());
+    const raw = JSON.parse(Buffer.from(data.content, 'base64').toString());
+    historico = Array.isArray(raw) ? raw : convertOld(raw);
   }
-  historico.push(...medicoes);
-  return JSON.stringify(historico, null, 2);
+
+  const compact = medicoes.map((m) => [m.codigo, m.nivel, m.epoch]);
+  historico.push(...compact);
+
+  const cutoff = Date.now() - 30 * 86400000;
+  historico = historico.filter((e) => e[2] >= cutoff);
+
+  return JSON.stringify(historico);
+}
+
+function convertOld(old) {
+  if (!Array.isArray(old)) return [];
+  return old.map((e) => [e.codigo || e[0], e.nivel || e[1], e.epoch || e[2]]);
 }
 
 async function run() {

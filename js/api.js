@@ -18,7 +18,8 @@ export async function fetchDados() {
     }
 
     if (histRes.ok) {
-      historico = await histRes.json();
+      const raw = await histRes.json();
+      historico = parseHistorico(raw);
     } else {
       console.warn('historico.json não encontrado');
     }
@@ -28,6 +29,17 @@ export async function fetchDados() {
     console.error('Erro ao carregar dados:', err);
     throw err;
   }
+}
+
+function parseHistorico(raw) {
+  if (!Array.isArray(raw) || raw.length === 0) return [];
+  if (Array.isArray(raw[0])) {
+    return raw.map(([codigo, nivel, epoch]) => ({ codigo, nivel, epoch }));
+  }
+  if (typeof raw[0] === 'object' && raw[0].codigo) {
+    return raw.map((e) => ({ codigo: e.codigo, nivel: e.nivel, epoch: e.epoch }));
+  }
+  return [];
 }
 
 export function filterHistorico(historico, codigo, dias) {
