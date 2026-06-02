@@ -30,7 +30,7 @@ body {
   font-family: 'Sora', sans-serif;
   background:
     linear-gradient(rgba(8, 15, 26, 0.65), rgba(13, 26, 43, 0.82)),
-    url('./background/background.webp') no-repeat center center fixed;
+    url('./background/50702319337-76b1fa5911-k.jpg') no-repeat center center fixed;
   background-size: cover;
   color: var(--text);
   min-height: 100vh;
@@ -139,7 +139,7 @@ body {
 
 .carousel {
   display: flex;
-  gap: 8px;
+  gap: 14px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
