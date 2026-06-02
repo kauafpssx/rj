@@ -1,4 +1,4 @@
-import { CONFIG, ESTACOES } from './config.js';
+import { CONFIG } from './config.js';
 
 export async function fetchDados() {
   try {
@@ -33,12 +33,17 @@ export async function fetchDados() {
 
 function mergeEstacoes(dados) {
   const dynamic = dados.e || {};
+  const metadata = dados.m || {};
   const sync = dados.s || '';
-  return ESTACOES.map((meta) => {
-    const entry = dynamic[meta.codigo];
+  return Object.entries(metadata).map(([cod, meta]) => {
+    const entry = dynamic[cod];
     if (!entry) return null;
     return {
-      ...meta,
+      codigo: Number(cod),
+      nome: meta.N,
+      municipio: meta.M,
+      rio: meta.R,
+      cota_inundacao: meta.C,
       nivel: entry.n,
       epoch: entry.t,
       sync,

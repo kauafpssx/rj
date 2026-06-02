@@ -6,6 +6,7 @@ const DATA_BRANCH = 'data';
 const TOKEN = process.env.GITHUB_TOKEN;
 
 const ESTACOES = [
+  { codigo: 87450020, nome: 'Porto Alegre', municipio: 'Porto Alegre', rio: 'Rio Guaíba', cota_inundacao: 3.60 },
   { codigo: 85400000, nome: 'Dona Francisca', municipio: 'Dona Francisca', rio: 'Rio Jacuí', cota_inundacao: 7.50 },
   { codigo: 85642000, nome: 'Cachoeira do Sul', municipio: 'Cachoeira do Sul', rio: 'Rio Jacuí', cota_inundacao: 18.00 },
   { codigo: 86510000, nome: 'Muçum', municipio: 'Muçum', rio: 'Rio Taquari', cota_inundacao: 18.00 },
@@ -17,7 +18,6 @@ const ESTACOES = [
   { codigo: 87376000, nome: 'Taquara', municipio: 'Taquara', rio: 'Rio Paranhana', cota_inundacao: 5.80 },
   { codigo: 87382000, nome: 'São Leopoldo', municipio: 'São Leopoldo', rio: 'Rio dos Sinos', cota_inundacao: 4.50 },
   { codigo: 87399000, nome: 'Gravataí', municipio: 'Gravataí', rio: 'Rio Gravataí', cota_inundacao: 4.75 },
-  { codigo: 87450020, nome: 'Porto Alegre', municipio: 'Porto Alegre', rio: 'Rio Guaíba', cota_inundacao: 3.60 },
 ];
 
 function pad(n) {
@@ -51,6 +51,14 @@ async function saveFile(branch, path, content, message) {
     sha,
   }, { headers: authHeader() });
   console.log(`[OK] ${path} → ${branch}`);
+}
+
+function buildMetadata() {
+  const m = {};
+  for (const e of ESTACOES) {
+    m[e.codigo] = { N: e.nome, M: e.municipio, R: e.rio, C: e.cota_inundacao };
+  }
+  return m;
 }
 
 function parseFeatures(features) {
@@ -99,9 +107,9 @@ async function fetchAPI() {
 
 async function appendHistorico(medicoes) {
   let historico = [];
-  const sha = await getSha('main', 'historico.json');
+  const sha = await getSha(DATA_BRANCH, 'historico.json');
   if (sha) {
-    const { data } = await axios.get(`${GITHUB_API}/historico.json?ref=main`, { headers: authHeader() });
+    const { data } = await axios.get(`${GITHUB_API}/historico.json?ref=${DATA_BRANCH}`, { headers: authHeader() });
     let text = Buffer.from(data.content, 'base64').toString();
     if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
     const raw = JSON.parse(text);
@@ -151,7 +159,8 @@ async function run() {
       const { estacoes, medicoes, sync } = buildRecords(apiMap);
       const msg = `Atualização: ${sync}`;
 
-      await saveFile(DATA_BRANCH, 'dados.json', JSON.stringify({ s: sync, e: estacoes }), msg);
+      const metadados = buildMetadata();
+      await saveFile(DATA_BRANCH, 'dados.json', JSON.stringify({ s: sync, m: metadados, e: estacoes }), msg);
       const historicoJson = await appendHistorico(medicoes);
       await saveFile(DATA_BRANCH, 'historico.json', historicoJson, msg);
 
