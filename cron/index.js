@@ -106,7 +106,10 @@ function buildRecords(apiMap) {
 async function fetchAPI() {
   const codigos = ESTACOES.map(e => e.codigo).join(',');
   const url = `${API_BASE}?f=json&where=Codigo+IN+(${codigos})+AND+Projeto%3D%27RHN%27&outFields=*&returnGeometry=false`;
-  const { data } = await axios.get(url);
+  const { data } = await axios.get(url, { timeout: 15000 });
+  if (!data || typeof data !== 'object') {
+    throw new Error(`Resposta inválida da API: ${JSON.stringify(data)}`);
+  }
   return data.features || [];
 }
 
@@ -166,11 +169,12 @@ async function run() {
       console.log(`\nConcluído! ${estacoes.length} estações atualizadas.`);
       return;
     } catch (err) {
+      console.error('Detalhes:', err?.stack || err);
       if (attempt < MAX_RETRIES) {
-        console.log(`Erro: ${err.message}. Aguardando 5 min para tentar novamente...`);
+        console.log(`Erro: ${err.message || '(sem mensagem)'}. Aguardando 5 min para tentar novamente...`);
         await sleep(RETRY_DELAY);
       } else {
-        console.error('Fatal:', err.message);
+        console.error('Fatal:', err.message || err);
         process.exit(1);
       }
     }
