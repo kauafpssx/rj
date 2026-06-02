@@ -2,9 +2,10 @@ import { CONFIG, ESTACOES } from './config.js';
 
 export async function fetchDados() {
   try {
+    const t = Date.now();
     const [dadosRes, histRes] = await Promise.all([
-      fetch(CONFIG.DADOS_PATH),
-      fetch(CONFIG.HISTORICO_PATH),
+      fetch(CONFIG.DADOS_PATH + '?_t=' + t),
+      fetch(CONFIG.HISTORICO_PATH + '?_t=' + t),
     ]);
 
     let estacoes = [];
