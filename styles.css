@@ -48,7 +48,7 @@ body {
   padding: 20px 16px 40px;
   display: flex;
   flex-direction: column;
-  gap: 96px;
+  gap: 20px;
   position: relative;
   z-index: 1;
 }
@@ -135,7 +135,8 @@ body {
   align-items: center;
   gap: 12px;
   animation: fadeUp 0.7s var(--ease) 0.1s both;
-  padding: 4px 0 8px;
+  padding: 4px 0;
+  margin-bottom: 20px;
 }
 
 .carousel {
@@ -268,7 +269,7 @@ body {
 }
 
 /* ── Card Detalhe ── */
-.detail-section { animation: fadeUp 0.7s var(--ease) 0.15s both; margin-bottom: 12px; }
+.detail-section { animation: fadeUp 0.7s var(--ease) 0.15s both; margin: 20px 0 20px; }
 
 .detail-card {
   background: var(--bg-card);
@@ -447,6 +448,7 @@ body {
   padding: 18px 16px;
   backdrop-filter: blur(12px);
   animation: fadeUp 0.7s var(--ease) 0.2s both;
+  margin-bottom: 20px;
 }
 
 .chart-header {
