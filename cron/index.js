@@ -133,27 +133,47 @@ function convertOld(old) {
   return old.map((e) => [e.codigo || e[0], e.nivel || e[1], e.epoch || e[2]]);
 }
 
+function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
 async function run() {
-  try {
-    console.log('Buscando dados da ANA...');
-    const features = await fetchAPI();
+  const MAX_RETRIES = 5;
+  const RETRY_DELAY = 5 * 60 * 1000;
 
-    if (!features.length) {
-      throw new Error('Nenhuma estação retornada pela API');
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      console.log(`Buscando dados da ANA... (tentativa ${attempt}/${MAX_RETRIES})`);
+      const features = await fetchAPI();
+
+      if (!features.length) {
+        if (attempt < MAX_RETRIES) {
+          console.log(`Nenhuma estação retornada. Aguardando 5 min para tentar novamente...`);
+          await sleep(RETRY_DELAY);
+          continue;
+        }
+        throw new Error('Nenhuma estação retornada pela API após todas as tentativas');
+      }
+
+      const apiMap = parseFeatures(features);
+      const { estacoes, medicoes, sync } = buildRecords(apiMap);
+      const msg = `Atualização: ${sync}`;
+
+      await saveFile('main', 'dados.json', JSON.stringify({ sync, estacoes }, null, 2), msg);
+      const historicoJson = await appendHistorico(medicoes);
+      await saveFile('main', 'historico.json', historicoJson, msg);
+
+      console.log(`\nConcluído! ${estacoes.length} estações atualizadas.`);
+      return;
+    } catch (err) {
+      if (attempt < MAX_RETRIES) {
+        console.log(`Erro: ${err.message}. Aguardando 5 min para tentar novamente...`);
+        await sleep(RETRY_DELAY);
+      } else {
+        console.error('Fatal:', err.message);
+        process.exit(1);
+      }
     }
-
-    const apiMap = parseFeatures(features);
-    const { estacoes, medicoes, sync } = buildRecords(apiMap);
-    const msg = `Atualização: ${sync}`;
-
-    await saveFile('main', 'dados.json', JSON.stringify({ sync, estacoes }, null, 2), msg);
-    const historicoJson = await appendHistorico(medicoes);
-    await saveFile('main', 'historico.json', historicoJson, msg);
-
-    console.log(`\nConcluído! ${estacoes.length} estações atualizadas.`);
-  } catch (err) {
-    console.error('Fatal:', err.message);
-    process.exit(1);
   }
 }
 
