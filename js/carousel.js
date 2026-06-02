@@ -16,7 +16,7 @@ function cardHTML(e, i, isActive) {
   const pct = (e.nivel / e.cota_inundacao) * 100;
   const color = getStatusColor(pct);
   return `
-    <div class="carousel-card ${isActive ? 'active' : ''}" data-index="${i}">
+    <div class="carousel-card glass ${isActive ? 'active' : ''}" data-index="${i}">
       <div class="card-city">${e.municipio}</div>
       <div class="card-nivel">${e.nivel.toFixed(2)}<small>m</small></div>
       <span class="card-status-dot" style="background: var(--${color})"></span>
