@@ -14,8 +14,8 @@ export const ESTACOES = [
 ];
 
 export const CONFIG = {
-  HISTORICO_PATH: 'https://raw.githubusercontent.com/kauafpssx/rj/data/historico.json',
-  DADOS_PATH: 'https://raw.githubusercontent.com/kauafpssx/rj/data/dados.json',
+  HISTORICO_PATH: 'historico.json',
+  DADOS_PATH: 'dados.json',
   COLORS: {
     green: '#34d399',
     yellow: '#facc15',
