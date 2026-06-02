@@ -45,10 +45,10 @@ body {
 .app {
   width: 100%;
   max-width: 1120px;
-  padding: 16px 16px 32px;
+  padding: 20px 16px 40px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 96px;
   position: relative;
   z-index: 1;
 }
@@ -133,8 +133,9 @@ body {
 .carousel-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   animation: fadeUp 0.7s var(--ease) 0.1s both;
+  padding: 4px 0 8px;
 }
 
 .carousel {
@@ -267,13 +268,13 @@ body {
 }
 
 /* ── Card Detalhe ── */
-.detail-section { animation: fadeUp 0.7s var(--ease) 0.15s both; }
+.detail-section { animation: fadeUp 0.7s var(--ease) 0.15s both; margin-bottom: 12px; }
 
 .detail-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 24px 20px;
+  padding: 32px 24px;
   text-align: center;
   backdrop-filter: blur(12px);
   position: relative;

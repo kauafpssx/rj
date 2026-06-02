@@ -69,7 +69,11 @@ function setupChartFilters() {
 async function init() {
   try {
     const data = await fetchDados();
-    state.estacoes = data.estacoes;
+    state.estacoes = data.estacoes.sort((a, b) => {
+      const idxA = ESTACOES.findIndex((e) => e.codigo === a.codigo);
+      const idxB = ESTACOES.findIndex((e) => e.codigo === b.codigo);
+      return (idxA === -1 ? 999 : idxA) - (idxB === -1 ? 999 : idxB);
+    });
     state.historico = data.historico;
 
     if (!state.estacoes.length) {
@@ -91,23 +95,23 @@ async function init() {
       if (typeof liquidGL === 'function') {
         try {
           liquidGL({
-            target: '.detail-card, .chart-section',
-            refraction: 0.01,
-            bevelDepth: 0.05,
-            bevelWidth: 0.15,
-            frost: 2,
+            target: '.header-content, .carousel-card, .carousel-btn, .detail-card, .chart-section, .filter-btn',
+            refraction: 0.003,
+            bevelDepth: 0.03,
+            bevelWidth: 0.12,
+            frost: 1.5,
             shadow: true,
-            specular: true,
+            specular: false,
             reveal: 'fade',
-            tilt: true,
-            tiltFactor: 3,
+            tilt: false,
+            magnify: 1,
           });
           console.log('liquidGL ativado');
         } catch (e) {
           console.warn('liquidGL:', e.message);
         }
       }
-    }, 100);
+    }, 200);
   } catch (err) {
     document.querySelector('.app').innerHTML = `
       <div class="detail-card" style="text-align:center;padding:48px 24px;margin-top:40px;">

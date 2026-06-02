@@ -1,4 +1,5 @@
 export const ESTACOES = [
+  { codigo: 87450020, nome: 'Porto Alegre', municipio: 'Porto Alegre', rio: 'Rio Guaíba', cota_inundacao: 3.60 },
   { codigo: 85400000, nome: 'Dona Francisca', municipio: 'Dona Francisca', rio: 'Rio Jacuí', cota_inundacao: 7.50 },
   { codigo: 85642000, nome: 'Cachoeira do Sul', municipio: 'Cachoeira do Sul', rio: 'Rio Jacuí', cota_inundacao: 18.00 },
   { codigo: 86510000, nome: 'Muçum', municipio: 'Muçum', rio: 'Rio Taquari', cota_inundacao: 18.00 },
@@ -10,7 +11,6 @@ export const ESTACOES = [
   { codigo: 87376000, nome: 'Taquara', municipio: 'Taquara', rio: 'Rio Paranhana', cota_inundacao: 5.80 },
   { codigo: 87382000, nome: 'São Leopoldo', municipio: 'São Leopoldo', rio: 'Rio dos Sinos', cota_inundacao: 4.50 },
   { codigo: 87399000, nome: 'Gravataí', municipio: 'Gravataí', rio: 'Rio Gravataí', cota_inundacao: 4.75 },
-  { codigo: 87450020, nome: 'Porto Alegre', municipio: 'Porto Alegre', rio: 'Rio Guaíba', cota_inundacao: 3.60 },
 ];
 
 export const CONFIG = {

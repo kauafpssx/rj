@@ -12,7 +12,7 @@ export async function fetchDados() {
 
     if (dadosRes.ok) {
       const dados = await dadosRes.json();
-      estacoes = dados.estacoes || [];
+      estacoes = (dados.estacoes || []).map((e) => ({ ...e, sync: dados.sync }));
     } else {
       console.warn('dados.json não encontrado');
     }
