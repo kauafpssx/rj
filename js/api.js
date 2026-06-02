@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js';
+import { CONFIG, ESTACOES } from './config.js';
 
 export async function fetchDados() {
   try {
@@ -12,7 +12,7 @@ export async function fetchDados() {
 
     if (dadosRes.ok) {
       const dados = await dadosRes.json();
-      estacoes = (dados.estacoes || []).map((e) => ({ ...e, sync: dados.sync }));
+      estacoes = mergeEstacoes(dados);
     } else {
       console.warn('dados.json não encontrado');
     }
@@ -29,6 +29,21 @@ export async function fetchDados() {
     console.error('Erro ao carregar dados:', err);
     throw err;
   }
+}
+
+function mergeEstacoes(dados) {
+  const dynamic = dados.e || {};
+  const sync = dados.s || '';
+  return ESTACOES.map((meta) => {
+    const entry = dynamic[meta.codigo];
+    if (!entry) return null;
+    return {
+      ...meta,
+      nivel: entry.n,
+      epoch: entry.t,
+      sync,
+    };
+  }).filter(Boolean);
 }
 
 function parseHistorico(raw) {

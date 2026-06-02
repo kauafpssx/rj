@@ -63,7 +63,7 @@ function parseFeatures(features) {
 
 function buildRecords(apiMap) {
   const now = formatDate();
-  const estacoes = [];
+  const estacoes = {};
   const medicoes = [];
 
   for (const e of ESTACOES) {
@@ -72,33 +72,16 @@ function buildRecords(apiMap) {
       console.log(`[SKIP] ${e.nome} (${e.codigo}): não encontrado`);
       continue;
     }
-    const nivelCm = raw.Ult_Dado;
-    const nivelM = +(nivelCm / 100).toFixed(2);
+    const nivelM = +(raw.Ult_Dado / 100).toFixed(2);
     const epoch = raw.Data_ult_dado;
-    const dataMedicao = formatDate(new Date(epoch));
-    const status = raw.Status_Dado || 'Sem dados';
 
-    estacoes.push({
-      codigo: e.codigo,
-      nome: e.nome,
-      municipio: e.municipio,
-      rio: e.rio,
-      nivel: nivelM,
-      cota_inundacao: e.cota_inundacao,
-      epoch,
-      data_medicao: dataMedicao,
-      status,
-    });
+    estacoes[e.codigo] = { n: nivelM, t: epoch };
 
-    medicoes.push({
-      codigo: e.codigo,
-      nome: e.nome,
-      nivel: nivelM,
+    medicoes.push([
+      e.codigo,
+      nivelM,
       epoch,
-      data_medicao: dataMedicao,
-      sync: now,
-      status,
-    });
+    ]);
   }
 
   return { estacoes, medicoes, sync: now };
@@ -125,8 +108,7 @@ async function appendHistorico(medicoes) {
     historico = Array.isArray(raw) ? raw : convertOld(raw);
   }
 
-  const compact = medicoes.map((m) => [m.codigo, m.nivel, m.epoch]);
-  historico.push(...compact);
+  historico.push(...medicoes);
 
   const cutoff = Date.now() - 30 * 86400000;
   historico = historico.filter((e) => e[2] >= cutoff);
@@ -170,11 +152,11 @@ async function run() {
       const { estacoes, medicoes, sync } = buildRecords(apiMap);
       const msg = `Atualização: ${sync}`;
 
-      await saveFile(DATA_BRANCH, 'dados.json', JSON.stringify({ sync, estacoes }, null, 2), msg);
+      await saveFile(DATA_BRANCH, 'dados.json', JSON.stringify({ s: sync, e: estacoes }), msg);
       const historicoJson = await appendHistorico(medicoes);
       await saveFile(DATA_BRANCH, 'historico.json', historicoJson, msg);
 
-      console.log(`\nConcluído! ${estacoes.length} estações atualizadas.`);
+      console.log(`\nConcluído! ${Object.keys(estacoes).length} estações atualizadas.`);
       return;
     } catch (err) {
       console.error('Detalhes:', err?.stack || err);
