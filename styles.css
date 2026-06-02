@@ -67,7 +67,6 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 10px 14px;
-  backdrop-filter: blur(12px);
 }
 
 .header-brand {
@@ -166,8 +165,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s var(--ease);
-  backdrop-filter: blur(8px);
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.15s var(--ease);
 }
 
 .carousel-btn:hover {
@@ -188,11 +186,11 @@ body {
   border-radius: var(--radius);
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s var(--ease);
-  backdrop-filter: blur(8px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
   flex-shrink: 0;
   opacity: 0.45;
   transform: scale(0.90);
+  will-change: transform;
   position: relative;
   overflow: hidden;
 }
@@ -277,7 +275,6 @@ body {
   border-radius: var(--radius);
   padding: 32px 24px;
   text-align: center;
-  backdrop-filter: blur(12px);
   position: relative;
   overflow: hidden;
 }
@@ -332,6 +329,7 @@ body {
   letter-spacing: -0.03em;
   transition: color 0.5s var(--ease);
   filter: drop-shadow(0 0 20px rgba(240, 180, 41, 0.15));
+  will-change: color;
 }
 
 .detail-level-unit {
@@ -353,15 +351,6 @@ body {
 .trend-up { color: var(--green); }
 .trend-down { color: var(--red); }
 .trend-stable { color: var(--text-dim); }
-
-.trend-up i, .trend-down i {
-  animation: trendBlink 1.2s ease-in-out infinite;
-}
-
-@keyframes trendBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
 
 .detail-status {
   display: flex;
@@ -446,7 +435,6 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px 16px;
-  backdrop-filter: blur(12px);
   animation: fadeUp 0.7s var(--ease) 0.2s both;
   margin-bottom: 20px;
 }
@@ -554,7 +542,6 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 12px 16px;
-  backdrop-filter: blur(16px);
   animation: slideIn 0.4s var(--ease);
   font-size: 0.75rem;
   line-height: 1.5;
@@ -578,8 +565,8 @@ body {
   background:
     linear-gradient(135deg, transparent 20%, rgba(255,255,255,0.03) 40%, rgba(240,180,41,0.015) 50%, transparent 80%),
     var(--bg-card);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(8px) saturate(1.4);
+  -webkit-backdrop-filter: blur(8px) saturate(1.4);
   box-shadow:
     0 8px 32px rgba(0,0,0,0.4),
     inset 0 1px 0 rgba(255,255,255,0.04),

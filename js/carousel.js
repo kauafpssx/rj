@@ -34,6 +34,6 @@ export function scrollToActive(index) {
   const cards = document.querySelectorAll('.carousel-card');
   const card = cards[index];
   if (card) {
-    card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    card.scrollIntoView({ inline: 'center', block: 'nearest' });
   }
 }
