@@ -1,31 +1,26 @@
-name: Auto Update!
+﻿name: Auto Update!
 
 on:
   schedule:
-    - cron: '14,46 * * * *'  # Executa nos minutos 20 e 50 de cada hora
-  workflow_dispatch:  # Permite a execução manual do workflow
+    - cron: '14,46 * * * *'
+  workflow_dispatch:
 
 jobs:
   fetch_data:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checar código
-        uses: actions/checkout@v2
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
         with:
-          node-version: '16'
-
-      - name: Configurar fuso horário para São Paulo
-        run: |
-          echo "TZ=America/Sao_Paulo" >> $GITHUB_ENV  # Define o fuso horário
-
-      - name: Instalar dependências
-        run: npm install
-
-      - name: Executar script
-        run: |
-          node index.js
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: echo 'TZ=America/Sao_Paulo' >> $GITHUB_ENV
+      - run: npm install
+        working-directory: cron
+      - run: node index.js
+        working-directory: cron
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Passa o token como variável de ambiente
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitoramento de Rios - RS</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-content">
+        <i class="fas fa-water header-icon"></i>
+        <h1>Monitoramento de Rios</h1>
+        <span class="header-sub">Rio Grande do Sul</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="carousel-section">
+        <button class="carousel-btn carousel-btn--left" id="carouselPrev" aria-label="Anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="carousel" id="carousel">
+          <!-- Cards gerados pelo JS -->
+        </div>
+
+        <button class="carousel-btn carousel-btn--right" id="carouselNext" aria-label="Próximo">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </section>
+
+      <section class="detail-section" id="detailSection">
+        <div class="detail-card">
+          <div class="detail-header">
+            <span class="detail-location" id="detailLocation">--</span>
+            <span class="detail-river" id="detailRiver">--</span>
+          </div>
+
+          <div class="detail-level" id="detailLevel">
+            <span class="detail-level-value" id="detailLevelValue">--</span>
+            <span class="detail-level-unit">m</span>
+          </div>
+
+          <div class="detail-tendencia" id="detailTendencia"></div>
+
+          <div class="detail-status" id="detailStatus">
+            <span class="status-badge" id="statusBadge">--</span>
+            <span class="status-cota" id="statusCota">--</span>
+          </div>
+
+          <div class="detail-meta">
+            <div class="meta-item">
+              <i class="far fa-clock"></i>
+              <span>Medição: <strong id="detailMedicao">--</strong></span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-sync-alt"></i>
+              <span>Sincronizado: <strong id="detailSync">--</strong></span>
+            </div>
+          </div>
+
+          <div class="detail-cota">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Cota de inundação: <strong id="detailCotaValor">--</strong></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="chart-section">
+        <div class="chart-header">
+          <h2><i class="fas fa-chart-line"></i> Histórico do Nível</h2>
+          <div class="chart-filters" id="chartFilters">
+            <button class="filter-btn active" data-range="1">24h</button>
+            <button class="filter-btn" data-range="7">7d</button>
+            <button class="filter-btn" data-range="30">30d</button>
+            <button class="filter-btn" data-range="0">Tudo</button>
+          </div>
+        </div>
+        <div class="chart-stats" id="chartStats"></div>
+        <div class="chart-wrapper">
+          <canvas id="chart"></canvas>
+          <div class="chart-loading" id="chartLoading">
+            <div class="wave-loader"></div>
+            <span>Carregando dados...</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="toast-container" id="toastContainer"></section>
+    </main>
+
+    <footer class="footer">
+      <p>Dados: <a href="https://www.gov.br/ana" target="_blank" rel="noopener">ANA</a> / <a href="https://www.sgb.gov.br" target="_blank" rel="noopener">SGB/CPRM</a></p>
+      <p>Desenvolvido com 💙</p>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
