@@ -105,7 +105,7 @@ async function appendHistorico(medicoes) {
     let text = Buffer.from(data.content, 'base64').toString();
     if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
     const raw = JSON.parse(text);
-    historico = Array.isArray(raw) ? raw : convertOld(raw);
+    historico = Array.isArray(raw) && Array.isArray(raw[0]) ? raw : convertOld(raw);
   }
 
   historico.push(...medicoes);
@@ -119,7 +119,6 @@ async function appendHistorico(medicoes) {
 function convertOld(old) {
   if (!Array.isArray(old) || !old.length) return [];
   if (Array.isArray(old[0])) return old;
-  // already compact
   if (typeof old[0] === 'object' && old[0] !== null) {
     return old.map((e) => [e.codigo, e.nivel, e.epoch]).filter((e) => e.every((v) => typeof v === 'number'));
   }
