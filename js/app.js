@@ -86,6 +86,28 @@ async function init() {
     setupKeyboard();
     setupTouchSwipe();
     setupChartFilters();
+
+    setTimeout(() => {
+      if (typeof liquidGL === 'function') {
+        try {
+          liquidGL({
+            target: '.detail-card, .chart-section',
+            refraction: 0.01,
+            bevelDepth: 0.05,
+            bevelWidth: 0.15,
+            frost: 2,
+            shadow: true,
+            specular: true,
+            reveal: 'fade',
+            tilt: true,
+            tiltFactor: 3,
+          });
+          console.log('liquidGL ativado');
+        } catch (e) {
+          console.warn('liquidGL:', e.message);
+        }
+      }
+    }, 100);
   } catch (err) {
     document.querySelector('.app').innerHTML = `
       <div class="detail-card" style="text-align:center;padding:48px 24px;margin-top:40px;">
