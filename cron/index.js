@@ -1,7 +1,8 @@
 const axios = require('axios');
 
 const API_BASE = 'https://portal1.snirh.gov.br/server/rest/services/SGH/CotasReferencia2/MapServer/2/query';
-const GITHUB_API = 'https://api.github.com/repos/kauacodex/rj/contents';
+const GITHUB_API = 'https://api.github.com/repos/kauafpssx/rj/contents';
+const DATA_BRANCH = 'data';
 const TOKEN = process.env.GITHUB_TOKEN;
 
 const ESTACOES = [
@@ -115,9 +116,9 @@ async function fetchAPI() {
 
 async function appendHistorico(medicoes) {
   let historico = [];
-  const sha = await getSha('main', 'historico.json');
+    const sha = await getSha(DATA_BRANCH, 'historico.json');
   if (sha) {
-    const { data } = await axios.get(`${GITHUB_API}/historico.json?ref=main`, { headers: authHeader() });
+    const { data } = await axios.get(`${GITHUB_API}/historico.json?ref=${DATA_BRANCH}`, { headers: authHeader() });
     const raw = JSON.parse(Buffer.from(data.content, 'base64').toString());
     historico = Array.isArray(raw) ? raw : convertOld(raw);
   }
@@ -162,9 +163,9 @@ async function run() {
       const { estacoes, medicoes, sync } = buildRecords(apiMap);
       const msg = `Atualização: ${sync}`;
 
-      await saveFile('main', 'dados.json', JSON.stringify({ sync, estacoes }, null, 2), msg);
+      await saveFile(DATA_BRANCH, 'dados.json', JSON.stringify({ sync, estacoes }, null, 2), msg);
       const historicoJson = await appendHistorico(medicoes);
-      await saveFile('main', 'historico.json', historicoJson, msg);
+      await saveFile(DATA_BRANCH, 'historico.json', historicoJson, msg);
 
       console.log(`\nConcluído! ${estacoes.length} estações atualizadas.`);
       return;
