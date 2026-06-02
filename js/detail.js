@@ -10,7 +10,7 @@ export function renderDetalhe(estacao, historico) {
   const trendIcon = getTrendArrow(tendencia);
   const trendAbs = Math.abs(tendencia).toFixed(2);
 
-  document.getElementById('detailLocation').textContent = `${estacao.municipio} - ${estacao.nome}`;
+  document.getElementById('detailLocation').textContent = estacao.municipio;
   document.getElementById('detailRiver').textContent = estacao.rio;
   document.getElementById('detailLevelValue').textContent = estacao.nivel.toFixed(2);
   document.getElementById('detailLevelValue').style.color = `var(--${color})`;
