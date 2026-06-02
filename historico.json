@@ -1,0 +1,110 @@
+[
+  {
+    "codigo": 85400000,
+    "nome": "Dona Francisca",
+    "nivel": 1.72,
+    "epoch": 1780404300000,
+    "data_medicao": "02/06/2026 09:45:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Normal"
+  },
+  {
+    "codigo": 85642000,
+    "nome": "Cachoeira do Sul",
+    "nivel": 0.29,
+    "epoch": 1780405200000,
+    "data_medicao": "02/06/2026 10:00:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Abaixo_90%_permanencia"
+  },
+  {
+    "codigo": 86510000,
+    "nome": "Muçum",
+    "nivel": 1.85,
+    "epoch": 1780405200000,
+    "data_medicao": "02/06/2026 10:00:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Normal"
+  },
+  {
+    "codigo": 86720000,
+    "nome": "Encantado",
+    "nivel": 0.76,
+    "epoch": 1780405200000,
+    "data_medicao": "02/06/2026 10:00:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Abaixo_90%_permanencia"
+  },
+  {
+    "codigo": 86879300,
+    "nome": "Lajeado",
+    "nivel": 12.78,
+    "epoch": 1780405200000,
+    "data_medicao": "02/06/2026 10:00:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Normal"
+  },
+  {
+    "codigo": 86881000,
+    "nome": "Bom Retiro do Sul",
+    "nivel": 2.38,
+    "epoch": 1780403400000,
+    "data_medicao": "02/06/2026 09:30:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Sem dados de referencia"
+  },
+  {
+    "codigo": 87165001,
+    "nome": "Feliz",
+    "nivel": 1,
+    "epoch": 1780405200000,
+    "data_medicao": "02/06/2026 10:00:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Sem dados de referencia"
+  },
+  {
+    "codigo": 87170000,
+    "nome": "São Sebastião do Caí",
+    "nivel": 1.89,
+    "epoch": 1780405200000,
+    "data_medicao": "02/06/2026 10:00:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Normal"
+  },
+  {
+    "codigo": 87376000,
+    "nome": "Taquara",
+    "nivel": 0.56,
+    "epoch": 1780398000000,
+    "data_medicao": "02/06/2026 08:00:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Sem dados de referencia"
+  },
+  {
+    "codigo": 87382000,
+    "nome": "São Leopoldo",
+    "nivel": 1.15,
+    "epoch": 1780402500000,
+    "data_medicao": "02/06/2026 09:15:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Normal"
+  },
+  {
+    "codigo": 87399000,
+    "nome": "Gravataí",
+    "nivel": 1.84,
+    "epoch": 1780402500000,
+    "data_medicao": "02/06/2026 09:15:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Normal"
+  },
+  {
+    "codigo": 87450020,
+    "nome": "Porto Alegre",
+    "nivel": 0.49,
+    "epoch": 1780402500000,
+    "data_medicao": "02/06/2026 09:15:00",
+    "sync": "02/06/2026 10:24:16",
+    "status": "Sem dados de referencia"
+  }
+]
