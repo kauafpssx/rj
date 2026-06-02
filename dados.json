@@ -1,0 +1,137 @@
+{
+  "sync": "02/06/2026 15:20:01",
+  "estacoes": [
+    {
+      "codigo": 85400000,
+      "nome": "Dona Francisca",
+      "municipio": "Dona Francisca",
+      "rio": "Rio Jacuí",
+      "nivel": 1.37,
+      "cota_inundacao": 7.5,
+      "epoch": 1780422300000,
+      "data_medicao": "02/06/2026 14:45:00",
+      "status": "Normal"
+    },
+    {
+      "codigo": 85642000,
+      "nome": "Cachoeira do Sul",
+      "municipio": "Cachoeira do Sul",
+      "rio": "Rio Jacuí",
+      "nivel": 0.54,
+      "cota_inundacao": 18,
+      "epoch": 1780423200000,
+      "data_medicao": "02/06/2026 15:00:00",
+      "status": "Normal"
+    },
+    {
+      "codigo": 86510000,
+      "nome": "Muçum",
+      "municipio": "Muçum",
+      "rio": "Rio Taquari",
+      "nivel": 1.51,
+      "cota_inundacao": 18,
+      "epoch": 1780423200000,
+      "data_medicao": "02/06/2026 15:00:00",
+      "status": "Normal"
+    },
+    {
+      "codigo": 86720000,
+      "nome": "Encantado",
+      "municipio": "Encantado",
+      "rio": "Rio Taquari",
+      "nivel": 0.62,
+      "cota_inundacao": 12,
+      "epoch": 1780423200000,
+      "data_medicao": "02/06/2026 15:00:00",
+      "status": "Abaixo_90%_permanencia"
+    },
+    {
+      "codigo": 86879300,
+      "nome": "Lajeado",
+      "municipio": "Lajeado",
+      "rio": "Rio Taquari",
+      "nivel": 12.83,
+      "cota_inundacao": 19,
+      "epoch": 1780423200000,
+      "data_medicao": "02/06/2026 15:00:00",
+      "status": "Normal"
+    },
+    {
+      "codigo": 86881000,
+      "nome": "Bom Retiro do Sul",
+      "municipio": "Bom Retiro do Sul",
+      "rio": "Rio Taquari",
+      "nivel": 2.04,
+      "cota_inundacao": 16.5,
+      "epoch": 1780421400000,
+      "data_medicao": "02/06/2026 14:30:00",
+      "status": "Sem dados de referencia"
+    },
+    {
+      "codigo": 87165001,
+      "nome": "Feliz",
+      "municipio": "Feliz",
+      "rio": "Rio Caí",
+      "nivel": 1,
+      "cota_inundacao": 9,
+      "epoch": 1780423200000,
+      "data_medicao": "02/06/2026 15:00:00",
+      "status": "Sem dados de referencia"
+    },
+    {
+      "codigo": 87170000,
+      "nome": "São Sebastião do Caí",
+      "municipio": "São Sebastião do Caí",
+      "rio": "Rio Caí",
+      "nivel": 1.88,
+      "cota_inundacao": 10,
+      "epoch": 1780423200000,
+      "data_medicao": "02/06/2026 15:00:00",
+      "status": "Normal"
+    },
+    {
+      "codigo": 87376000,
+      "nome": "Taquara",
+      "municipio": "Taquara",
+      "rio": "Rio Paranhana",
+      "nivel": 0.56,
+      "cota_inundacao": 5.8,
+      "epoch": 1780416000000,
+      "data_medicao": "02/06/2026 13:00:00",
+      "status": "Sem dados de referencia"
+    },
+    {
+      "codigo": 87382000,
+      "nome": "São Leopoldo",
+      "municipio": "São Leopoldo",
+      "rio": "Rio dos Sinos",
+      "nivel": 1.13,
+      "cota_inundacao": 4.5,
+      "epoch": 1780420500000,
+      "data_medicao": "02/06/2026 14:15:00",
+      "status": "Normal"
+    },
+    {
+      "codigo": 87399000,
+      "nome": "Gravataí",
+      "municipio": "Gravataí",
+      "rio": "Rio Gravataí",
+      "nivel": 1.84,
+      "cota_inundacao": 4.75,
+      "epoch": 1780420500000,
+      "data_medicao": "02/06/2026 14:15:00",
+      "status": "Normal"
+    },
+    {
+      "codigo": 87450020,
+      "nome": "Porto Alegre",
+      "municipio": "Porto Alegre",
+      "rio": "Rio Guaíba",
+      "nivel": 0.52,
+      "cota_inundacao": 3.6,
+      "epoch": 1780420500000,
+      "data_medicao": "02/06/2026 14:15:00",
+      "status": "Sem dados de referencia"
+    }
+  ]
+}
