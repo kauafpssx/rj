@@ -1,4 +1,4 @@
-import { getStatusColor } from './config.js';
+import { getStatusColor } from './config.js?v=4';
 
 export function renderCarousel(estacoes, activeIndex, onSelect) {
   const el = document.getElementById('carousel');

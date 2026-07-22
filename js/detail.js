@@ -1,5 +1,5 @@
-import { getStatusColor, getStatusText, getTrendArrow } from './config.js';
-import { formatTime } from './utils.js';
+import { getStatusColor, getStatusText, getTrendArrow } from './config.js?v=4';
+import { formatTime } from './utils.js?v=4';
 
 export function renderDetalhe(estacao, historico) {
   const pct = (estacao.nivel / estacao.cota_inundacao) * 100;

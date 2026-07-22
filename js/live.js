@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js';
+import { CONFIG } from './config.js?v=4';
 
 const WATCH_INTERVAL = 5 * 60 * 1000;
 

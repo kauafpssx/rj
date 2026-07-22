@@ -1,6 +1,6 @@
-import { CONFIG, getStatusColor } from './config.js';
-import { pad } from './utils.js';
-import { filterHistorico } from './api.js';
+import { CONFIG, getStatusColor } from './config.js?v=4';
+import { pad } from './utils.js?v=4';
+import { filterHistorico } from './api.js?v=4';
 
 export function renderChart(estacao, historico, chartRange, chartInstance) {
   const dias = chartRange;

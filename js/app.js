@@ -1,10 +1,10 @@
-import { ESTACOES, CONFIG } from './config.js';
-import { showToast } from './utils.js';
-import { fetchDados, fetchHistorico, fetchClima } from './api.js';
-import { renderCarousel, updateCardActive, scrollToActive } from './carousel.js';
-import { renderDetalhe, renderClima } from './detail.js';
-import { renderChart } from './chart.js';
-import { initLivePlayer } from './live.js';
+import { ESTACOES, CONFIG } from './config.js?v=4';
+import { showToast } from './utils.js?v=4';
+import { fetchDados, fetchHistorico, fetchClima } from './api.js?v=4';
+import { renderCarousel, updateCardActive, scrollToActive } from './carousel.js?v=4';
+import { renderDetalhe, renderClima } from './detail.js?v=4';
+import { renderChart } from './chart.js?v=4';
+import { initLivePlayer } from './live.js?v=4';
 
 const state = {
   estacoes: [],
