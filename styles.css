@@ -348,8 +348,8 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 
-.trend-up { color: var(--green); }
-.trend-down { color: var(--red); }
+.trend-up { color: var(--red); }
+.trend-down { color: var(--green); }
 .trend-stable { color: var(--text-dim); }
 
 .detail-status {
@@ -428,6 +428,29 @@ body {
 
 .detail-cota i { font-size: 0.7rem; color: var(--red); }
 .detail-cota strong { color: var(--text); font-weight: 600; }
+
+.detail-clima {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.clima-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.clima-item i { color: var(--amber); font-size: 0.7rem; }
 
 /* ── Gráfico ── */
 .chart-section {
@@ -573,6 +596,60 @@ body {
     inset 0 -1px 0 rgba(0,0,0,0.12);
 }
 
+/* ── Live ── */
+.live-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  animation: fadeUp 0.7s var(--ease) 0.25s both;
+  margin-bottom: 20px;
+}
+
+.live-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #000;
+}
+
+.live-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  pointer-events: none;
+  transform: scaleX(1.02);
+  transform-origin: center;
+}
+
+.live-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.4s var(--ease);
+}
+
+.live-overlay .wave-loader {
+  opacity: 0;
+  transition: opacity 0.2s var(--ease);
+}
+
+.live-overlay.loading {
+  background: #000;
+}
+
+.live-overlay.loading .wave-loader {
+  opacity: 1;
+}
+
 /* ── Animações ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
@@ -604,6 +681,9 @@ body {
   .carousel-btn { width: 28px; height: 28px; font-size: 0.7rem; }
   .chart-header { flex-direction: column; align-items: flex-start; }
   .toast-container { left: 10px; right: 10px; max-width: none; }
+  .detail-clima { flex-wrap: nowrap; gap: 4px; }
+  .clima-item { padding: 3px 6px; font-size: 0.58rem; gap: 3px; flex-shrink: 1; min-width: 0; white-space: nowrap; }
+  .clima-item i { font-size: 0.6rem; }
 }
 
 @media (max-width: 480px) {
@@ -616,4 +696,6 @@ body {
   .filter-btn { padding: 2px 7px; font-size: 0.6rem; }
   .chart-wrapper { height: 160px; }
   .detail-level-value { font-size: 2.6rem; }
+  .clima-item { padding: 2px 5px; font-size: 0.52rem; }
+  .clima-item i { font-size: 0.54rem; }
 }

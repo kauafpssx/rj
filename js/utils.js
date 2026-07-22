@@ -10,18 +10,6 @@ export function formatTime(epoch) {
   return formatDate(new Date(epoch));
 }
 
-export function formatTimeAgo(epoch) {
-  const diff = Date.now() - epoch;
-  const mins = Math.round(diff / 60000);
-  if (mins < 1) return 'agora';
-  if (mins < 60) return `${mins} min atrás`;
-  const hrs = Math.floor(mins / 60);
-  const rem = mins % 60;
-  if (hrs < 24) return rem ? `${hrs}h${rem}min` : `${hrs}h atrás`;
-  const days = Math.floor(hrs / 24);
-  return `${days}d atrás`;
-}
-
 export function showToast(msg) {
   const container = document.getElementById('toastContainer');
   const el = document.createElement('div');

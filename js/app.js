@@ -1,20 +1,21 @@
 import { ESTACOES, CONFIG } from './config.js';
 import { showToast } from './utils.js';
-import { requestNotificacao } from './notification.js';
-import { fetchDados } from './api.js';
+import { fetchDados, fetchHistorico, fetchClima } from './api.js';
 import { renderCarousel, updateCardActive, scrollToActive } from './carousel.js';
-import { renderDetalhe } from './detail.js';
+import { renderDetalhe, renderClima } from './detail.js';
 import { renderChart } from './chart.js';
+import { initLivePlayer } from './live.js';
 
 const state = {
   estacoes: [],
   historico: [],
+  clima: {},
   activeIndex: 0,
   chart: null,
   chartRange: 1,
 };
 
-function setActive(i) {
+async function setActive(i) {
   if (i < 0) i = 0;
   if (i >= state.estacoes.length) i = state.estacoes.length - 1;
   if (i === state.activeIndex) return;
@@ -24,10 +25,12 @@ function setActive(i) {
   scrollToActive(i);
 
   const estacao = state.estacoes[i];
-  renderDetalhe(estacao, state.historico);
-  state.chart = renderChart(estacao, state.historico, state.chartRange, state.chart);
+  state.historico = await fetchHistorico(estacao.codigo);
+  if (state.activeIndex !== i) return;
 
-  requestNotificacao(estacao);
+  renderDetalhe(estacao, state.historico);
+  renderClima(estacao, state.clima);
+  state.chart = renderChart(estacao, state.historico, state.chartRange, state.chart);
 }
 
 function setupCarouselButtons() {
@@ -74,22 +77,27 @@ async function init() {
       const idxB = ESTACOES.findIndex((e) => e.codigo === b.codigo);
       return (idxA === -1 ? 999 : idxA) - (idxB === -1 ? 999 : idxB);
     });
-    state.historico = data.historico;
-
     if (!state.estacoes.length) {
       showToast('Nenhuma estação encontrada. Verifique se o cron já foi executado.');
       return;
     }
 
     renderCarousel(state.estacoes, 0, setActive);
+    const [historico, clima] = await Promise.all([
+      fetchHistorico(state.estacoes[0].codigo),
+      fetchClima(),
+    ]);
+    state.historico = historico;
+    state.clima = clima;
     renderDetalhe(state.estacoes[0], state.historico);
+    renderClima(state.estacoes[0], state.clima);
     state.chart = renderChart(state.estacoes[0], state.historico, state.chartRange, state.chart);
-    requestNotificacao(state.estacoes[0]);
 
     setupCarouselButtons();
     setupKeyboard();
     setupTouchSwipe();
     setupChartFilters();
+    initLivePlayer();
   } catch (err) {
     document.querySelector('.app').innerHTML = `
       <div class="detail-card" style="text-align:center;padding:48px 24px;margin-top:40px;">

@@ -17,7 +17,7 @@ export function renderChart(estacao, historico, chartRange, chartInstance) {
 
   const labels = filtered.map((h) => {
     const d = new Date(h.epoch);
-    return dias <= 1
+    return dias === 1
       ? `${pad(d.getHours())}:${pad(d.getMinutes())}`
       : `${pad(d.getDate())}/${pad(d.getMonth() + 1)} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   });
@@ -30,8 +30,7 @@ export function renderChart(estacao, historico, chartRange, chartInstance) {
 
   const pct = (estacao.nivel / estacao.cota_inundacao) * 100;
   const grad = ctx.createLinearGradient(0, 0, 0, 400);
-  const c = pct >= 100 ? 'red' : pct >= 80 ? 'orange' : pct >= 50 ? 'yellow' : 'green';
-  const colorHex = CONFIG.COLORS[c];
+  const colorHex = CONFIG.COLORS[getStatusColor(pct)];
   grad.addColorStop(0, colorHex + '60');
   grad.addColorStop(1, colorHex + '05');
 
@@ -92,17 +91,14 @@ export function renderChart(estacao, historico, chartRange, chartInstance) {
           cornerRadius: 6,
           displayColors: false,
           callbacks: {
-            title: (items) => {
-              if (dias <= 1) return items[0].label;
-              return items[0].label;
-            },
+            title: (items) => items[0].label,
             label: (ctx) => `${ctx.parsed.y.toFixed(2)}m`,
           },
         },
       },
       scales: {
         x: {
-          ticks: { color: '#4a5f78', maxTicksLimit: dias <= 1 ? 10 : 8, font: { size: 9, family: 'JetBrains Mono' } },
+          ticks: { color: '#4a5f78', maxTicksLimit: dias === 1 ? 10 : 8, font: { size: 9, family: 'JetBrains Mono' } },
           grid: { color: 'rgba(240,180,41,0.04)' },
         },
         y: {

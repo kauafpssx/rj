@@ -1,14 +1,10 @@
-import { CONFIG, ESTACOES } from './config.js';
+import { CONFIG } from './config.js';
 
 export async function fetchDados() {
   try {
-    const [dadosRes, histRes] = await Promise.all([
-      fetch(CONFIG.DADOS_PATH, { cache: 'no-store' }),
-      fetch(CONFIG.HISTORICO_PATH, { cache: 'no-store' }),
-    ]);
+    const dadosRes = await fetch(CONFIG.DADOS_PATH, { cache: 'no-store' });
 
     let estacoes = [];
-    let historico = [];
 
     if (dadosRes.ok) {
       const dados = await dadosRes.json();
@@ -17,63 +13,79 @@ export async function fetchDados() {
       console.warn('dados.json não encontrado');
     }
 
-    if (histRes.ok) {
-      const raw = await histRes.json();
-      historico = parseHistorico(raw);
-    } else {
-      console.warn('historico.json não encontrado');
-    }
-
-    return { estacoes, historico };
+    return { estacoes };
   } catch (err) {
     console.error('Erro ao carregar dados:', err);
     throw err;
   }
 }
 
-function mergeEstacoes(dados) {
-  const dynamic = dados.e || {};
-  const sync = dados.s || '';
-  const hasMeta = dados.m && Object.keys(dados.m).length > 0;
-
-  if (hasMeta) {
-    return Object.entries(dados.m).map(([cod, meta]) => {
-      const entry = dynamic[cod];
-      if (!entry) return null;
-      return {
-        codigo: Number(cod),
-        nome: meta.N,
-        municipio: meta.M,
-        rio: meta.R,
-        cota_inundacao: meta.C,
-        nivel: entry.n,
-        epoch: entry.t,
-        sync,
-      };
-    }).filter(Boolean);
+export async function fetchClima() {
+  try {
+    const res = await fetch(CONFIG.CLIMA_PATH, { cache: 'no-store' });
+    if (!res.ok) return {};
+    const dados = await res.json();
+    return dados.c || {};
+  } catch (err) {
+    console.error('Erro ao carregar clima:', err);
+    return {};
   }
-
-  return ESTACOES.map((meta) => {
-    const entry = dynamic[meta.codigo];
-    if (!entry) return null;
-    return {
-      ...meta,
-      nivel: entry.n,
-      epoch: entry.t,
-      sync,
-    };
-  }).filter(Boolean);
 }
 
-function parseHistorico(raw) {
-  if (!Array.isArray(raw) || raw.length === 0) return [];
-  if (Array.isArray(raw[0])) {
-    return raw.map(([codigo, nivel, epoch]) => ({ codigo, nivel, epoch }));
+const HISTORICO_CACHE_TTL = 60 * 1000;
+
+function getHistoricoCache(codigo) {
+  try {
+    const cached = JSON.parse(sessionStorage.getItem(`rj_hist_${codigo}`) || 'null');
+    if (cached && Date.now() - cached.t < HISTORICO_CACHE_TTL) return cached.data;
+  } catch {
+    // ignora cache corrompido
   }
-  if (typeof raw[0] === 'object' && raw[0].codigo) {
-    return raw.map((e) => ({ codigo: e.codigo, nivel: e.nivel, epoch: e.epoch }));
+  return null;
+}
+
+function setHistoricoCache(codigo, data) {
+  try {
+    sessionStorage.setItem(`rj_hist_${codigo}`, JSON.stringify({ data, t: Date.now() }));
+  } catch {
+    // sessionStorage cheio/indisponível, ignora
   }
-  return [];
+}
+
+export async function fetchHistorico(codigo) {
+  const cached = getHistoricoCache(codigo);
+  if (cached) return cached;
+
+  try {
+    const res = await fetch(`${CONFIG.HISTORICO_BASE}${codigo}`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const raw = await res.json();
+    if (!Array.isArray(raw)) return [];
+    const historico = raw.map(([nivel, epoch]) => ({ codigo, nivel, epoch }));
+    setHistoricoCache(codigo, historico);
+    return historico;
+  } catch (err) {
+    console.error(`Erro ao carregar histórico da estação ${codigo}:`, err);
+    return [];
+  }
+}
+
+function mergeEstacoes(dados) {
+  const dynamic = dados.e || {};
+
+  return Object.entries(dados.m || {}).map(([cod, meta]) => {
+    const entry = dynamic[cod];
+    if (!entry) return null;
+    return {
+      codigo: Number(cod),
+      nome: meta.N,
+      municipio: meta.M,
+      rio: meta.R,
+      cota_inundacao: meta.C,
+      nivel: entry.n,
+      epoch: entry.t,
+    };
+  }).filter(Boolean);
 }
 
 export function filterHistorico(historico, codigo, dias) {

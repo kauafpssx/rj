@@ -13,9 +13,14 @@ export const ESTACOES = [
   { codigo: 87399000, nome: 'Gravataí', municipio: 'Gravataí', rio: 'Rio Gravataí', cota_inundacao: 4.75 },
 ];
 
+const API_BASE = 'https://rio-jacui.alwaysdata.net';
+
 export const CONFIG = {
-  HISTORICO_PATH: 'https://raw.githubusercontent.com/kauafpssx/rj/data/historico.json',
-  DADOS_PATH: 'https://raw.githubusercontent.com/kauafpssx/rj/data/dados.json',
+  API_BASE,
+  DADOS_PATH: `${API_BASE}/agua/dados`,
+  HISTORICO_BASE: `${API_BASE}/agua/historico/`,
+  CLIMA_PATH: `${API_BASE}/clima`,
+  LIVE_PATH: `${API_BASE}/live`,
   COLORS: {
     green: '#34d399',
     yellow: '#facc15',
@@ -24,7 +29,6 @@ export const CONFIG = {
     amber: '#f0b429',
     cyan: '#22d3ee',
   },
-  NOTIFICATION_KEY: 'rj_last_notified',
 };
 
 export function getStatusColor(pct) {
