@@ -32,9 +32,10 @@ function enforcePlayerState(iframe) {
   let tries = 0;
   const id = setInterval(() => {
     sendCommand(iframe, 'mute');
+    sendCommand(iframe, 'playVideo');
     sendCommand(iframe, 'setPlaybackQuality', ['hd2160']);
     tries++;
-    if (tries >= 6) clearInterval(id);
+    if (tries >= 10) clearInterval(id);
   }, 1500);
 }
 
@@ -50,7 +51,12 @@ export function initLivePlayer() {
   async function refresh() {
     const live = await fetchLive();
     if (!live) return;
-    if (live.videoId === lastId) return;
+
+    if (live.videoId === lastId) {
+      sendCommand(iframe, 'playVideo');
+      sendCommand(iframe, 'mute');
+      return;
+    }
     lastId = live.videoId;
 
     overlay?.classList.add('loading');

@@ -4,7 +4,7 @@ import { fetchDados, fetchHistorico, fetchClima } from './api.js?v=4';
 import { renderCarousel, updateCardActive, scrollToActive } from './carousel.js?v=4';
 import { renderDetalhe, renderClima } from './detail.js?v=4';
 import { renderChart } from './chart.js?v=4';
-import { initLivePlayer } from './live.js?v=4';
+import { initLivePlayer } from './live.js?v=5';
 
 const state = {
   estacoes: [],
